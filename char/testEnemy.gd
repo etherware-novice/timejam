@@ -5,5 +5,8 @@ signal endTurn
 func _ready():
 	print("yey")
 
-func _process(_delta):
-	pass
+
+func doAttack(player):
+	await get_tree().create_timer(2).timeout
+	print("done")
+	endTurn.emit()
