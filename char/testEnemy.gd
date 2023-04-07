@@ -7,6 +7,8 @@ func _ready():
 
 
 func doAttack(player):
-	await get_tree().create_timer(2).timeout
-	print("done")
+	scale.y = scale.y / 2
+	await get_tree().create_timer(5).timeout
+	scale.y = scale.y * 2
+	print("enemy atk")
 	endTurn.emit()

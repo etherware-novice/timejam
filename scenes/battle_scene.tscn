@@ -1,8 +1,133 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctf08ld6v1uhe"]
+[gd_scene load_steps=24 format=3 uid="uid://ctf08ld6v1uhe"]
 
-[ext_resource type="Texture2D" uid="uid://drsvd1w0aja8i" path="res://icon.svg" id="1_ddjh0"]
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_kamkq"]
+[ext_resource type="Texture2D" uid="uid://boxvm6yi74qhq" path="res://art/attackHit.png" id="2_10alu"]
 [ext_resource type="Texture2D" uid="uid://cgwu708v8w0c5" path="res://art/select.png" id="3_ohcfm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gw37v"]
+atlas = ExtResource("2_10alu")
+region = Rect2(208, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6kls"]
+atlas = ExtResource("2_10alu")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d8ki"]
+atlas = ExtResource("2_10alu")
+region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4x8io"]
+atlas = ExtResource("2_10alu")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8opc2"]
+atlas = ExtResource("2_10alu")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57if3"]
+atlas = ExtResource("2_10alu")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwmgl"]
+atlas = ExtResource("2_10alu")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_480hs"]
+atlas = ExtResource("2_10alu")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bauu"]
+atlas = ExtResource("2_10alu")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqnfa"]
+atlas = ExtResource("2_10alu")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phga4"]
+atlas = ExtResource("2_10alu")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvnvl"]
+atlas = ExtResource("2_10alu")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu5y3"]
+atlas = ExtResource("2_10alu")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7l151"]
+atlas = ExtResource("2_10alu")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l52oh"]
+atlas = ExtResource("2_10alu")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7m2k"]
+atlas = ExtResource("2_10alu")
+region = Rect2(192, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1q0s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gw37v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6kls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d8ki")
+}],
+"loop": false,
+"name": &"attackHit",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x8io")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8opc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57if3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwmgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_480hs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bauu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqnfa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phga4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvnvl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu5y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7l151")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l52oh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7m2k")
+}],
+"loop": false,
+"name": &"attackMain",
+"speed": 6.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x40s2"]
 atlas = ExtResource("3_ohcfm")
@@ -29,12 +154,12 @@ animations = [{
 [node name="battleScene" type="Node2D"]
 script = ExtResource("1_kamkq")
 
-[node name="player" type="TextureRect" parent="."]
-offset_left = -424.0
-offset_top = -44.0
-offset_right = -296.0
-offset_bottom = 84.0
-texture = ExtResource("1_ddjh0")
+[node name="player" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-291, 39)
+scale = Vector2(16, 16)
+sprite_frames = SubResource("SpriteFrames_o1q0s")
+animation = &"attackMain"
 
 [node name="battleCam" type="Camera2D" parent="."]
 
@@ -58,3 +183,10 @@ position = Vector2(-454, 249)
 
 [node name="main2" type="Marker2D" parent="."]
 position = Vector2(-347, 252)
+
+[node name="ball" type="ColorRect" parent="."]
+offset_left = -879.0
+offset_top = -68.0
+offset_right = -847.0
+offset_bottom = -38.0
+color = Color(0.0196078, 0.266667, 0.580392, 1)

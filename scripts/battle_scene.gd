@@ -16,6 +16,8 @@ var nextBattleId = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$battleCam.make_current()
+	var bsize = $player.scale * 2  # this is to keep the colorrect about the same size as the player
+	$ball.size = bsize
 	
 	var i = 1
 	for x in constants.senarioLookup[nextBattleId]:
@@ -43,6 +45,7 @@ func nextTurn():
 	
 	playerMove = false
 	selectTrack = "disable"
+	_unhandled_key_input(null)
 	
 	turnOrder[subTurn].doAttack($player)
 
@@ -52,11 +55,13 @@ func _unhandled_key_input(event):
 		$selector.position = Vector2(-999,-999)
 		return
 	
-	if event.is_action_pressed("ui_accept") and selectIndex == 0:
+	if event.is_action_pressed("ui_accept"):
 		if selectTrack == "main":
-			selectTrack = "enemy"
+			match selectIndex:
+				0:
+					selectTrack = "enemy"
 		elif selectTrack == "enemy":
-			nextTurn()
+			playerDoAttack()
 			return
 		selectIndex=0
 		
@@ -88,3 +93,33 @@ func _setSelectTrack(track):
 		opt = get_node(track + str(i))
 	
 	selectTrack = track
+
+func playerDoAttack():
+	var target = selectMark[selectIndex]
+	selectTrack = "disable"
+	$player.play("attackMain")
+	while $player.frame < 6:
+		await $player.frame_changed
+	if not Input.is_action_pressed("ui_accept"):  # no cheating by holding the button
+		while $player.frame < 11:
+			if Input.is_action_pressed("ui_accept"):
+				$player.play("attackHit")
+				await doBallThrow($player.position, target.position)
+				target.scale.y = target.scale.y / 2
+				get_tree().create_timer(0.5).timeout.connect(func(): target.scale.y = target.scale.y * 2)
+				print("action command success")
+				break
+			await $player.frame_changed
+	
+	if $player.is_playing():
+		await $player.animation_finished
+	$player.play("attackMain")
+	$player.stop()
+	nextTurn()
+	
+func doBallThrow(start, end):
+	var tweener := create_tween()
+	$ball.position = start
+	tweener.tween_property($ball, "position", end, 0.2)
+	await tweener.finished
+	$ball.position = Vector2(-999, -999)
