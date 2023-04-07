@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctf08ld6v1uhe"]
+
+[ext_resource type="Texture2D" uid="uid://drsvd1w0aja8i" path="res://icon.svg" id="1_ddjh0"]
+[ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_kamkq"]
+[ext_resource type="Texture2D" uid="uid://cgwu708v8w0c5" path="res://art/select.png" id="3_ohcfm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x40s2"]
+atlas = ExtResource("3_ohcfm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm83v"]
+atlas = ExtResource("3_ohcfm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fu60n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x40s2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tm83v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="battleScene" type="Node2D"]
+script = ExtResource("1_kamkq")
+
+[node name="player" type="TextureRect" parent="."]
+offset_left = -424.0
+offset_top = -44.0
+offset_right = -296.0
+offset_bottom = 84.0
+texture = ExtResource("1_ddjh0")
+
+[node name="battleCam" type="Camera2D" parent="."]
+
+[node name="enemy1" type="AnimatedSprite2D" parent="."]
+position = Vector2(349, 46)
+
+[node name="enemy2" type="AnimatedSprite2D" parent="."]
+position = Vector2(157, -71)
+
+[node name="enemy3" type="AnimatedSprite2D" parent="."]
+position = Vector2(191, 163)
+
+[node name="selector" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(31.5, 31.5)
+scale = Vector2(4.9375, 4.9375)
+sprite_frames = SubResource("SpriteFrames_fu60n")
+
+[node name="main1" type="Marker2D" parent="."]
+position = Vector2(-454, 249)
+
+[node name="main2" type="Marker2D" parent="."]
+position = Vector2(-347, 252)
