@@ -1,9 +1,11 @@
 extends Node2D
 
 var playerMove = false
-var selectMark = []
 var selectIndex = 0
+# select track basically controls which things you can select (enemies, menu opts, etc)
+var selectMark = []
 var selectTrack : set = _setSelectTrack
+var subMenu
 
 var turnOrder = []
 var subTurn = 99  # turn order index, set so high so the player always starts
@@ -87,7 +89,7 @@ func _setSelectTrack(track):
 		return
 	$selector.position = opt.position
 	while opt:
-		if not opt is AnimatedSprite2D or opt.sprite_frames:
+		if not opt is enemy or opt.targetable:
 			selectMark.append(opt)
 		i += 1
 		opt = get_node(track + str(i))
@@ -101,12 +103,11 @@ func playerDoAttack():
 	while $player.frame < 6:
 		await $player.frame_changed
 	if not Input.is_action_pressed("ui_accept"):  # no cheating by holding the button
-		while $player.frame < 11:
+		while $player.frame < 12:
 			if Input.is_action_pressed("ui_accept"):
 				$player.play("attackHit")
 				await doBallThrow($player.position, target.position)
-				target.scale.y = target.scale.y / 2
-				get_tree().create_timer(0.5).timeout.connect(func(): target.scale.y = target.scale.y * 2)
+				target.recDmg(5)
 				print("action command success")
 				break
 			await $player.frame_changed
