@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ctf08ld6v1uhe"]
+[gd_scene load_steps=28 format=3 uid="uid://ctf08ld6v1uhe"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_kamkq"]
 [ext_resource type="Texture2D" uid="uid://boxvm6yi74qhq" path="res://art/attackHit.png" id="2_10alu"]
@@ -153,6 +153,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iqtqb"]
+size = Vector2(54, 179)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b3dyt"]
+size = Vector2(32, 32.3183)
+
 [node name="battleScene" type="Node2D"]
 script = ExtResource("1_kamkq")
 
@@ -194,22 +200,36 @@ position = Vector2(-347, 252)
 position = Vector2(-326, -284)
 script = ExtResource("5_owl22")
 
-[node name="paddle" type="ColorRect" parent="paddlectrl"]
-offset_left = -428.0
-offset_top = -28.0
-offset_right = -388.0
-offset_bottom = 154.0
+[node name="paddle" type="Area2D" parent="paddlectrl"]
+position = Vector2(-474, -58)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="paddlectrl/paddle"]
+position = Vector2(27, 88)
+shape = SubResource("RectangleShape2D_iqtqb")
+
+[node name="ColorRect" type="ColorRect" parent="paddlectrl/paddle"]
+offset_top = -1.0
+offset_right = 54.0
+offset_bottom = 178.0
 color = Color(0.0196078, 0.266667, 0.580392, 1)
+
+[node name="ball" type="Area2D" parent="paddlectrl"]
+position = Vector2(-345, -75)
+scale = Vector2(1, 1.02109)
+
+[node name="ColorRect" type="ColorRect" parent="paddlectrl/ball"]
+offset_right = 32.0
+offset_bottom = 30.0
+color = Color(0.0196078, 0.266667, 0.580392, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="paddlectrl/ball"]
+position = Vector2(16, 16.1591)
+shape = SubResource("RectangleShape2D_b3dyt")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="paddlectrl/ball"]
 
 [node name="flasher" type="Timer" parent="paddlectrl"]
 wait_time = 0.3
-
-[node name="ball" type="ColorRect" parent="paddlectrl"]
-offset_left = -345.0
-offset_top = -75.0
-offset_right = -313.0
-offset_bottom = -45.0
-color = Color(0.0196078, 0.266667, 0.580392, 1)
 
 [node name="playerPaddleSpawn" type="Marker2D" parent="paddlectrl"]
 position = Vector2(-458, -193)
@@ -223,3 +243,8 @@ theme_override_font_sizes/font_size = 68
 text = "READY
 "
 visible_ratio = -0.166667
+
+[connection signal="finished" from="paddlectrl" to="." method="_on_paddlectrl_finished"]
+[connection signal="area_entered" from="paddlectrl/ball" to="." method="_on_ball_area_entered"]
+[connection signal="area_entered" from="paddlectrl/ball" to="paddlectrl" method="_on_ball_area_entered"]
+[connection signal="screen_exited" from="paddlectrl/ball/VisibleOnScreenNotifier2D" to="paddlectrl" method="_on_visible_on_screen_notifier_2d_screen_exited"]

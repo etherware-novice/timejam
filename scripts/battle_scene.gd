@@ -17,9 +17,10 @@ var nextBattleId = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	$battleCam.make_current()
-	var bsize = $player.scale * 2  # this is to keep the colorrect about the same size as the player
-	$paddlectrl/ball.size = bsize
+#	var bsize = $player.scale * 2  # this is to keep the colorrect about the same size as the player
+#	$paddlectrl/ball.size = bsize
 	
 	var i = 1
 	for x in constants.senarioLookup[nextBattleId]:
@@ -125,3 +126,7 @@ func doBallThrow(start, end):
 	tweener.tween_property($paddlectrl/ball, "position", end, 0.2)
 	await tweener.finished
 	$paddlectrl/ball.position = Vector2(-999, -999)
+
+
+func _on_paddlectrl_finished():
+	nextTurn()
