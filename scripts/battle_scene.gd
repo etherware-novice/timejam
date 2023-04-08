@@ -6,6 +6,7 @@ var selectIndex = 0
 var selectMark = []
 var selectTrack : set = _setSelectTrack
 var subMenu
+var mainMenuText = ["Fight", "Special", "Heal", "Run"]
 
 var turnOrder = []
 var subTurn = 99  # turn order index, set so high so the player always starts
@@ -82,9 +83,13 @@ func _unhandled_key_input(event):
 	if selectMark.size() > 1:
 		if event.is_action_pressed("ui_left",true):
 			selectIndex -= 1
+			$VHSControl/flipper.play("flip")
+			$VHSControl/flipperText.text = ""
 		elif event.is_action_pressed("ui_right",true):
 			selectIndex += 1
-		
+			$VHSControl/flipper.play("flip")
+			$VHSControl/flipperText.text = ""
+			
 	selectIndex = clamp(selectIndex, 0, max(selectMark.size() - 1, 0) )
 	
 	$selector.position = selectMark[selectIndex].position + Vector2(0, -50)
@@ -142,3 +147,9 @@ func doBallThrow(start, end):
 
 func _on_paddlectrl_finished():
 	nextTurn()
+
+
+func _on_flipper_animation_finished():
+	if subMenu != "main":
+		return
+	$VHSControl/flipperText.text = mainMenuText[selectIndex]
