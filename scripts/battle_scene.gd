@@ -44,6 +44,7 @@ func nextTurn():
 	if subTurn >= turnOrder.size():
 		playerMove = true
 		selectTrack = "main"
+		subMenu = "main"
 		subTurn = -1  # to offset the +1
 		return
 	
@@ -68,10 +69,15 @@ func _unhandled_key_input(event):
 			match selectIndex:
 				0:
 					selectTrack = "enemy"
-		elif selectTrack == "enemy":
+					subMenu = "attack"
+		elif subMenu == "attack":
 			playerDoAttack()
 			return
 		selectIndex=0
+	
+	if event.is_action_pressed("ui_cancel"):
+		selectTrack = "main"
+		subMenu = "main"
 		
 	if selectMark.size() > 1:
 		if event.is_action_pressed("ui_left",true):
