@@ -19,7 +19,7 @@ var nextBattleId = 1
 func _ready():
 	$battleCam.make_current()
 	var bsize = $player.scale * 2  # this is to keep the colorrect about the same size as the player
-	$ball.size = bsize
+	$paddlectrl/ball.size = bsize
 	
 	var i = 1
 	for x in constants.senarioLookup[nextBattleId]:
@@ -49,7 +49,8 @@ func nextTurn():
 	selectTrack = "disable"
 	_unhandled_key_input(null)
 	
-	turnOrder[subTurn].doAttack($player)
+	#turnOrder[subTurn].doAttack($player)
+	$paddlectrl.start()
 
 
 func _unhandled_key_input(event):
@@ -120,7 +121,7 @@ func playerDoAttack():
 	
 func doBallThrow(start, end):
 	var tweener := create_tween()
-	$ball.position = start
-	tweener.tween_property($ball, "position", end, 0.2)
+	$paddlectrl/ball.position = start
+	tweener.tween_property($paddlectrl/ball, "position", end, 0.2)
 	await tweener.finished
-	$ball.position = Vector2(-999, -999)
+	$paddlectrl/ball.position = Vector2(-999, -999)
