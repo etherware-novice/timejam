@@ -29,8 +29,8 @@ func _ready():
 		spr.script = load(charBase + ".gd")
 		spr._ready()  # maybe a bad idea but it worky
 		spr.set_process(true)
-		spr.sprite_frames = load(charBase + ".tres")
-		spr.play()
+		spr.get_node("AnimatedSprite2D").sprite_frames = load(charBase + ".tres")
+		spr.get_node("AnimatedSprite2D").play()
 		spr.connect("endTurn", nextTurn)
 		turnOrder.append(spr)
 		
@@ -51,7 +51,10 @@ func nextTurn():
 	_unhandled_key_input(null)
 	
 	#turnOrder[subTurn].doAttack($player)
-	$paddlectrl.start()
+	if turnOrder[subTurn].canAttack:
+		$paddlectrl.start()
+	else:
+		nextTurn()
 
 
 func _unhandled_key_input(event):
@@ -77,7 +80,7 @@ func _unhandled_key_input(event):
 		
 	selectIndex = clamp(selectIndex, 0, max(selectMark.size() - 1, 0) )
 	
-	$selector.position = selectMark[selectIndex].position
+	$selector.position = selectMark[selectIndex].position + Vector2(0, -100)
 	pass
 
 func _setSelectTrack(track):
@@ -101,23 +104,25 @@ func _setSelectTrack(track):
 func playerDoAttack():
 	var target = selectMark[selectIndex]
 	selectTrack = "disable"
-	$player.play("attackMain")
-	while $player.frame < 6:
-		await $player.frame_changed
+	
+	var sprite = $player/AnimatedSprite2D
+	sprite.play("attackMain")
+	while sprite.frame < 6:
+		await sprite.frame_changed
 	if not Input.is_action_pressed("ui_accept"):  # no cheating by holding the button
-		while $player.frame < 12:
+		while sprite.frame < 12:
 			if Input.is_action_pressed("ui_accept"):
-				$player.play("attackHit")
+				sprite.play("attackHit")
 				await doBallThrow($player.position, target.position)
 				target.recDmg(5)
 				print("action command success")
 				break
-			await $player.frame_changed
+			await sprite.frame_changed
 	
-	if $player.is_playing():
-		await $player.animation_finished
-	$player.play("attackMain")
-	$player.stop()
+	if sprite.is_playing():
+		await sprite.animation_finished
+	sprite.play("attackMain")
+	sprite.stop()
 	nextTurn()
 	
 func doBallThrow(start, end):

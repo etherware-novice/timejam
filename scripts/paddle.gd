@@ -22,7 +22,7 @@ func start():
 	#                     0,1     1,2   2,4   -1,1
 	var flip = ( ( (randi() % 2) + 1 ) * 2 ) - 3
 	ballVelocity = Vector2(-1, flip)
-	$ball.position = $ready.position + Vector2(300, 0)
+	$ball.position = $ready.position
 	active = true
 
 func stop():
@@ -64,7 +64,12 @@ func _process(delta):
 
 
 func _on_ball_area_entered(area):
-	ballVelocity *= -1
+	if not area.script:
+		ballVelocity = Vector2(-ballVelocity.x, ( ( (randi() % 2) + 1 ) * 2 ) - 3)
+		return
+	if area.targetable:
+		area.recDmg(5)
+		stop()
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

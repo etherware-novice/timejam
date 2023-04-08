@@ -1,4 +1,4 @@
-extends AnimatedSprite2D
+extends Area2D
 class_name enemy
 
 signal endTurn
@@ -19,4 +19,5 @@ func recDmg(damage):
 
 func die():
 	targetable = false
+	canAttack = false
 	get_tree().create_timer(20).timeout.connect(queue_free)

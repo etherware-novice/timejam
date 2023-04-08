@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 constants="*res://scripts/constants.gd"
+player="*res://char/player.gd"
 
 [rendering]
 
