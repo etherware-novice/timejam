@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://ctf08ld6v1uhe"]
+[gd_scene load_steps=49 format=3 uid="uid://ctf08ld6v1uhe"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_kamkq"]
 [ext_resource type="Script" path="res://char/player.gd" id="2_8fuv7"]
@@ -258,6 +258,27 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_p4vh5"]
+resource_name = "moveUp"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VHSControl:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(0.196146, 1),
+"update": 0,
+"values": [Vector2(-583, 152), Vector2(-583, 80)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0ws7d"]
+_data = {
+"moveUp": SubResource("Animation_p4vh5")
+}
+
 [node name="battleScene" type="Node2D"]
 script = ExtResource("1_kamkq")
 
@@ -419,6 +440,21 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 text = "FIGHT"
 text_overrun_behavior = 3
+
+[node name="displayer" type="Label" parent="VHSControl"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 189.0
+offset_right = 115.0
+offset_bottom = 215.0
+theme_override_colors/font_color = Color(0.113725, 0.294118, 0.184314, 1)
+theme_override_font_sizes/font_size = 32
+text = "ENEMY"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0ws7d")
+}
 
 [connection signal="finished" from="paddlectrl" to="." method="_on_paddlectrl_finished"]
 [connection signal="area_entered" from="paddlectrl/ball" to="." method="_on_ball_area_entered"]

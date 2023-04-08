@@ -47,6 +47,7 @@ func nextTurn():
 		selectTrack = "main"
 		subMenu = "main"
 		subTurn = -1  # to offset the +1
+		$VHSControl/flipper.play_backwards("flipDown")
 		return
 	
 	playerMove = false
@@ -67,10 +68,14 @@ func _unhandled_key_input(event):
 	
 	if event.is_action_pressed("ui_accept"):
 		if selectTrack == "main":
+			$AnimationPlayer.play("moveUp")
+			$VHSControl/flipper.play("flipDown")
+			$VHSControl/flipperText.text = ""
 			match selectIndex:
 				0:
 					selectTrack = "enemy"
 					subMenu = "attack"
+					
 		elif subMenu == "attack":
 			playerDoAttack()
 			return
@@ -79,19 +84,23 @@ func _unhandled_key_input(event):
 	if event.is_action_pressed("ui_cancel"):
 		selectTrack = "main"
 		subMenu = "main"
+		$AnimationPlayer.play_backwards("moveUp")
+		$VHSControl/flipper.play_backwards("flipDown")
 		
 	if selectMark.size() > 1:
 		if event.is_action_pressed("ui_left",true):
 			selectIndex -= 1
-			$VHSControl/flipper.play("flip")
-			$VHSControl/flipperText.text = ""
+			if subMenu == "main":
+				$VHSControl/flipper.play("flip")
+				$VHSControl/flipperText.text = ""
 		elif event.is_action_pressed("ui_right",true):
 			selectIndex += 1
-			$VHSControl/flipper.play("flip")
-			$VHSControl/flipperText.text = ""
+			if subMenu == "main":
+				$VHSControl/flipper.play("flip")
+				$VHSControl/flipperText.text = ""
 			
 	selectIndex = clamp(selectIndex, 0, max(selectMark.size() - 1, 0) )
-	
+	updateDisplayPreview()
 	$selector.position = selectMark[selectIndex].position + Vector2(0, -50)
 	pass
 
@@ -99,6 +108,9 @@ func _setSelectTrack(track):
 	selectMark = []
 	if track == "disable":
 		selectTrack = track
+		if subTurn == 0:
+			$VHSControl/flipper.play("flipDown")
+			$AnimationPlayer.play_backwards("moveUp")
 		return
 	var i = 1
 	var opt = get_node(track + str(i))
@@ -153,3 +165,9 @@ func _on_flipper_animation_finished():
 	if subMenu != "main":
 		return
 	$VHSControl/flipperText.text = mainMenuText[selectIndex]
+
+func updateDisplayPreview():
+	match selectTrack:
+		"enemy":
+			var target = selectMark[selectIndex]
+			$VHSControl/displayer.text = str(target.hp) + " / " + str(target.maxHp) + " " + target.displayName
