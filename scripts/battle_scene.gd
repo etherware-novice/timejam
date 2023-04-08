@@ -32,6 +32,7 @@ func _ready():
 		spr.get_node("AnimatedSprite2D").sprite_frames = load(charBase + ".tres")
 		spr.get_node("AnimatedSprite2D").play()
 		spr.connect("endTurn", nextTurn)
+		spr.connect("updateHp", $VHSLine.updateHP)
 		turnOrder.append(spr)
 		
 		i += 1
@@ -80,7 +81,7 @@ func _unhandled_key_input(event):
 		
 	selectIndex = clamp(selectIndex, 0, max(selectMark.size() - 1, 0) )
 	
-	$selector.position = selectMark[selectIndex].position + Vector2(0, -100)
+	$selector.position = selectMark[selectIndex].position + Vector2(0, -50)
 	pass
 
 func _setSelectTrack(track):
@@ -92,7 +93,7 @@ func _setSelectTrack(track):
 	var opt = get_node(track + str(i))
 	if not opt:
 		return
-	$selector.position = opt.position
+	$selector.position = opt.position + Vector2(0, -50)
 	while opt:
 		if not opt is enemy or opt.targetable:
 			selectMark.append(opt)

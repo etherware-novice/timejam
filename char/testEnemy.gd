@@ -1,9 +1,11 @@
 extends enemy
 
 func _ready():
+	super()
 	print("yey")
 	targetable = true
 	canAttack = true
+	displayName = "enemy"
 
 
 func doAttack(player):
