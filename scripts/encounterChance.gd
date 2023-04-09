@@ -15,6 +15,9 @@ func _process(delta):
 
 
 func _on_area_entered(area):
+	constants.loadDialog(0)
+	return
+	
 	if not active:
 		return
 	if area.name == "player":

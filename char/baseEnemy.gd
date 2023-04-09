@@ -10,6 +10,7 @@ var hp : set = _hp_setter, get = _hp_getter
 var targetable = false
 var canAttack = true
 
+
 var animate = true
 
 func roundStart():
