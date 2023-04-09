@@ -36,6 +36,7 @@ func _ready():
 		turnOrder.append(spr)
 		
 		i += 1
+	$player.updateHp.connect($VHSLine._on_hp_reset_timeout)
 	nextTurn()
 
 

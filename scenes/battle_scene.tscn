@@ -1,8 +1,8 @@
 [gd_scene load_steps=49 format=3 uid="uid://ctf08ld6v1uhe"]
 
 [ext_resource type="Script" path="res://scripts/battle_scene.gd" id="1_kamkq"]
-[ext_resource type="Script" path="res://char/player.gd" id="2_8fuv7"]
 [ext_resource type="Texture2D" uid="uid://boxvm6yi74qhq" path="res://art/attackHit.png" id="2_10alu"]
+[ext_resource type="Script" path="res://char/battlePlayerStandin.gd" id="2_eflp8"]
 [ext_resource type="Script" path="res://char/baseEnemy.gd" id="3_6mtid"]
 [ext_resource type="Texture2D" uid="uid://cgwu708v8w0c5" path="res://art/select.png" id="3_ohcfm"]
 [ext_resource type="Script" path="res://scripts/paddle.gd" id="5_owl22"]
@@ -283,7 +283,7 @@ _data = {
 script = ExtResource("1_kamkq")
 
 [node name="player" type="Area2D" parent="."]
-script = ExtResource("2_8fuv7")
+script = ExtResource("2_eflp8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="player"]
 texture_filter = 1
@@ -351,7 +351,7 @@ position = Vector2(-276, 248)
 position = Vector2(-219, 248)
 
 [node name="paddlectrl" type="Node2D" parent="."]
-position = Vector2(-326, -284)
+position = Vector2(-301, -239)
 script = ExtResource("5_owl22")
 
 [node name="paddle" type="Area2D" parent="paddlectrl"]
@@ -457,6 +457,7 @@ libraries = {
 }
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+position = Vector2(-679, -102)
 
 [connection signal="finished" from="paddlectrl" to="." method="_on_paddlectrl_finished"]
 [connection signal="area_entered" from="paddlectrl/ball" to="." method="_on_ball_area_entered"]

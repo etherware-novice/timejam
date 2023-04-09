@@ -67,7 +67,7 @@ func _on_ball_area_entered(area):
 	if not area.script:
 		ballVelocity = Vector2(-ballVelocity.x, ( ( (randi() % 2) + 1 ) * 2 ) - 3)
 		return
-	if area.targetable:
+	if area.targetable or area.name == "player":
 		area.recDmg(5)
 		stop()
 
