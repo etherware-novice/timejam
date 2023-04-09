@@ -18,7 +18,8 @@ const senarioLookup = [
 const dialogTable = [
 	{ "Lorem ipsum doler": "default",
 	"Sit amet": "default",
-	"abc": "123" }
+	"abc": "123" },
+	{"Where am I?": "player"}
 ]
 
 func loadBattle(position, encounter):
