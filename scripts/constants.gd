@@ -16,8 +16,8 @@ const senarioLookup = [
 ]
 
 const dialogTable = [
-	{ "Lorem ipsum doler": "Example Speaker",
-	"Sit amet": "Example Speaker",
+	{ "Lorem ipsum doler": "default",
+	"Sit amet": "default",
 	"abc": "123" }
 ]
 
@@ -37,3 +37,4 @@ func loadDialog(id):
 	root.add_child(box)
 	box.set_owner(root)
 	box.start(dArray)
+	await box.ended

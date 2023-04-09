@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0r1yu4mbs0xs"]
+[gd_scene load_steps=7 format=3 uid="uid://d0r1yu4mbs0xs"]
 
 [ext_resource type="Script" path="res://scripts/dialog.gd" id="1_s8af3"]
+[ext_resource type="Texture2D" uid="uid://drsvd1w0aja8i" path="res://icon.svg" id="2_fn8k7"]
 
 [sub_resource type="Animation" id="Animation_oqhn7"]
 resource_name = "expand"
@@ -63,6 +64,22 @@ _data = {
 "expand": SubResource("Animation_oqhn7")
 }
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_e337y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fn8k7")
+}],
+"loop": true,
+"name": &"123",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="dialog" type="CanvasLayer"]
 script = ExtResource("1_s8af3")
 
@@ -96,5 +113,9 @@ text_overrun_behavior = 3
 
 [node name="ticker" type="Timer" parent="."]
 wait_time = 0.2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(971, 163)
+sprite_frames = SubResource("SpriteFrames_e337y")
 
 [connection signal="timeout" from="ticker" to="." method="_on_ticker_timeout"]
