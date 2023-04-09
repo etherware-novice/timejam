@@ -3,7 +3,8 @@ extends Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#$Camera2D.make_current()
+	if player.overworldRespawnPos:
+		position = player.overworldRespawnPos
 	randomize()
 	pass # Replace with function body.
 

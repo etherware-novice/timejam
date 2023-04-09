@@ -41,13 +41,18 @@ func _ready():
 
 
 func nextTurn():
+	selectTrack = "enemy"
+	if selectMark.size() < 1:
+		fadeOut()
+		return
+	
 	subTurn += 1
 	if subTurn >= turnOrder.size():
 		playerMove = true
 		selectTrack = "main"
 		subMenu = "main"
-		subTurn = -1  # to offset the +1
 		$VHSControl/flipper.play_backwards("flipDown")
+		subTurn = -1  # to offset the +1
 		return
 	
 	playerMove = false
@@ -77,6 +82,8 @@ func _unhandled_key_input(event):
 					subMenu = "attack"
 					
 		elif subMenu == "attack":
+			$AnimationPlayer.play_backwards("moveUp")
+			$VHSControl/flipper.play("flipDown")
 			playerDoAttack()
 			return
 		selectIndex=0
@@ -108,9 +115,6 @@ func _setSelectTrack(track):
 	selectMark = []
 	if track == "disable":
 		selectTrack = track
-		if subTurn == 0:
-			$VHSControl/flipper.play("flipDown")
-			$AnimationPlayer.play_backwards("moveUp")
 		return
 	var i = 1
 	var opt = get_node(track + str(i))
@@ -171,3 +175,10 @@ func updateDisplayPreview():
 		"enemy":
 			var target = selectMark[selectIndex]
 			$VHSControl/displayer.text = str(target.hp) + " / " + str(target.maxHp) + " " + target.displayName
+
+func fadeOut():
+	$selector.queue_free()
+	var tweener = get_tree().create_tween()
+	tweener.tween_property($CanvasModulate, "color", Color(), 2)
+	await tweener.finished
+	get_tree().change_scene_to_file("res://scenes/overworld_1.tscn")

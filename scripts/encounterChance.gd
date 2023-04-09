@@ -2,7 +2,12 @@ extends Area2D
 class_name encounter
 
 @export var possibleSpawn : Dictionary = {0: 0.5, 1: 0.25}
+@export var startChance : float
+var active : bool = false
 
+func _ready():
+	active = false
+	get_tree().create_timer(2).timeout.connect(func(): active = true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -10,8 +15,13 @@ func _process(delta):
 
 
 func _on_area_entered(area):
+	if not active:
+		return
 	if area.name == "player":
-		$CollisionShape2D.set_deferred("disabled", true)
+		if randf() < startChance:
+			active = false
+			get_tree().create_timer(2).timeout.connect(func(): active = true)
+			return
 		var chances = 10
 		var enemy = 0
 		
@@ -21,4 +31,5 @@ func _on_area_entered(area):
 				break
 			chances += 1
 		
+		player.overworldRespawnPos = area.position
 		constants.loadBattle(area.get_global_transform_with_canvas().get_origin(), enemy)

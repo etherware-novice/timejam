@@ -219,6 +219,7 @@ position_smoothing_enabled = true
 position = Vector2(421, 193)
 disable_mode = 1
 script = ExtResource("3_dmc68")
+startChance = 0.2
 metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="encounterChance"]

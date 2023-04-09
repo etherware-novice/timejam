@@ -456,6 +456,8 @@ libraries = {
 "": SubResource("AnimationLibrary_0ws7d")
 }
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
 [connection signal="finished" from="paddlectrl" to="." method="_on_paddlectrl_finished"]
 [connection signal="area_entered" from="paddlectrl/ball" to="." method="_on_ball_area_entered"]
 [connection signal="area_entered" from="paddlectrl/ball" to="paddlectrl" method="_on_ball_area_entered"]
