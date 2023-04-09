@@ -16,10 +16,10 @@ var animate = true
 func roundStart():
 	if hp == null:
 		hp = maxHp
-	$AnimatedSprite2D.animation_finished.connect(func(): $AnimatedSprite2D.play("idle"))
+	$AnimatedSprite2D.animation_finished.connect(returnToIdle)
 
 func doAttack(player):
-	await get_tree().create_timer(2)
+	await get_tree().create_timer(2) 
 	endTurn.emit()
 
 func recDmg(damage):
@@ -44,3 +44,7 @@ func die():
 	if spr:
 		$AnimatedSprite2D.play("die")
 		$AnimatedSprite2D.animation_finished.connect(func(): $AnimatedSprite2D.play("dieLoop"))
+
+func returnToIdle():
+	if hp > 0:
+		$AnimatedSprite2D.play("idle")
