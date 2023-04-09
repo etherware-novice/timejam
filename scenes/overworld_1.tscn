@@ -1,7 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://dmn6cyc2d7qxi"]
+[gd_scene load_steps=29 format=3 uid="uid://dmn6cyc2d7qxi"]
 
 [ext_resource type="Script" path="res://scripts/playerOverworld.gd" id="1_hrtfj"]
 [ext_resource type="Texture2D" uid="uid://dx0i6anom54lb" path="res://art/playerWalk.png" id="1_rasik"]
+[ext_resource type="Script" path="res://scripts/encounterChance.gd" id="3_dmc68"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xg0wa"]
 atlas = ExtResource("1_rasik")
@@ -214,16 +215,20 @@ shape = SubResource("RectangleShape2D_iee4o")
 [node name="Camera2D" type="Camera2D" parent="player"]
 position_smoothing_enabled = true
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(252, 116)
+[node name="encounterChance" type="Area2D" parent="."]
+position = Vector2(421, 193)
+disable_mode = 1
+script = ExtResource("3_dmc68")
 metadata/_edit_group_ = true
 
-[node name="ColorRect" type="ColorRect" parent="Area2D"]
-offset_left = 463.0
-offset_top = 94.0
-offset_right = 810.0
-offset_bottom = 322.0
+[node name="ColorRect" type="ColorRect" parent="encounterChance"]
+offset_left = -7.0
+offset_top = -86.0
+offset_right = 340.0
+offset_bottom = 142.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(636.5, 207.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="encounterChance"]
+position = Vector2(170, 31)
 shape = SubResource("RectangleShape2D_2poqj")
+
+[connection signal="area_entered" from="encounterChance" to="encounterChance" method="_on_area_entered"]

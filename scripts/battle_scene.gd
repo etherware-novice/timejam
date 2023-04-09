@@ -13,7 +13,6 @@ var subTurn = 99  # turn order index, set so high so the player always starts
 var turnCount = 0
 var nextInput = null
 
-var nextBattleId = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,7 +23,7 @@ func _ready():
 #	$paddlectrl/ball.size = bsize
 	
 	var i = 1
-	for x in constants.senarioLookup[nextBattleId]:
+	for x in constants.senarioLookup[player.nextEncounter]:
 		var charBase = constants.charLookup[x]
 		var spr = get_node("enemy" + str(i))
 		spr.script = load(charBase + ".gd")
@@ -38,6 +37,7 @@ func _ready():
 		
 		i += 1
 	nextTurn()
+
 
 
 func nextTurn():

@@ -23,11 +23,19 @@ func _process(delta):
 		velocity = velocity.normalized() * 400
 		if velocity.y < 0:
 			$AnimatedSprite2D.play("up")
+			player.overworldFacing = 3
 		elif velocity.y > 0:
 			$AnimatedSprite2D.play("down")
+			player.overworldFacing = 2
 		elif velocity.x != 0:
 			$AnimatedSprite2D.play("right")
-			$AnimatedSprite2D.flip_h = velocity.x < 0
+			var isLeft = velocity.x < 0
+			$AnimatedSprite2D.flip_h = isLeft
+			if isLeft:
+				player.overworldFacing = 4
+			else:
+				player.overworldFacing = 1
+			
 	else:
 		$AnimatedSprite2D.stop()
 	
