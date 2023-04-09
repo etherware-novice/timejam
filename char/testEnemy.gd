@@ -3,7 +3,7 @@ extends enemy
 func _ready():
 	super()
 	print("yey")
-	targetable = true
+	animate = false
 	canAttack = true
 	displayName = "enemy"
 

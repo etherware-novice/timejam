@@ -26,13 +26,24 @@ func _ready():
 	for x in constants.senarioLookup[player.nextEncounter]:
 		var charBase = constants.charLookup[x]
 		var spr = get_node("enemy" + str(i))
-		spr.script = load(charBase + ".gd")
-		spr._ready()  # maybe a bad idea but it worky
+		
+		var script = charBase + ".gd"
+		if ResourceLoader.exists(script):
+			spr.script = load(script)
+		else:
+			spr.script = load("res://char/baseEnemy.gd")
+		spr.roundStart() 
 		spr.set_process(true)
 		spr.get_node("AnimatedSprite2D").sprite_frames = load(charBase + ".tres")
-		spr.get_node("AnimatedSprite2D").play()
+		spr.get_node("AnimatedSprite2D").play("idle")
+		if spr.displayName == "null":
+			spr.displayName = charBase.get_file()
+		if x > 0:
+			spr.get_node("AnimatedSprite2D").scale = Vector2(8,8)
+			spr.get_node("AnimatedSprite2D").texture_filter = 1
 		spr.connect("endTurn", nextTurn)
 		spr.connect("updateHp", $VHSLine.updateHP)
+		spr.targetable = true
 		turnOrder.append(spr)
 		
 		i += 1

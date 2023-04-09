@@ -2,7 +2,7 @@ extends enemy
 
 
 
-func _ready():
+func roundStart():
 	super()
 	displayName = "player"
 

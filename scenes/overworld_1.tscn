@@ -216,7 +216,7 @@ shape = SubResource("RectangleShape2D_iee4o")
 position_smoothing_enabled = true
 
 [node name="encounterChance" type="Area2D" parent="."]
-position = Vector2(421, 193)
+position = Vector2(455, 201)
 disable_mode = 1
 script = ExtResource("3_dmc68")
 startChance = 0.1
@@ -232,4 +232,25 @@ offset_bottom = 142.0
 position = Vector2(170, 31)
 shape = SubResource("RectangleShape2D_2poqj")
 
+[node name="encounterChance2" type="Area2D" parent="."]
+position = Vector2(-670, 188)
+disable_mode = 1
+script = ExtResource("3_dmc68")
+possibleSpawn = {
+2: 1
+}
+startChance = 0.1
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="encounterChance2"]
+offset_left = -7.0
+offset_top = -86.0
+offset_right = 340.0
+offset_bottom = 142.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="encounterChance2"]
+position = Vector2(170, 31)
+shape = SubResource("RectangleShape2D_2poqj")
+
 [connection signal="area_entered" from="encounterChance" to="encounterChance" method="_on_area_entered"]
+[connection signal="area_entered" from="encounterChance2" to="encounterChance2" method="_on_area_entered"]

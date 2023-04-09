@@ -3,13 +3,16 @@ extends Node
 signal battleTransition(position)
 
 const charLookup = [
-	"res://char/testEnemy"
+	"res://char/testEnemy",
+	"res://char/icecream"
 ]
 
 # uses charLookup id
 const senarioLookup = [
 	[0],
-	[0, 0]
+	[0, 0],
+	[1],
+	[1, 1, 1]
 ]
 
 func loadBattle(position, encounter):
