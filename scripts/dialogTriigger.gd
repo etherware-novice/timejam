@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var dialogLoaded : int = 0
+@export var lockPlayer : bool = false
 var active
 
 func _ready():
@@ -11,9 +12,15 @@ func _ready():
 func _process(delta):
 	pass
 
-
-func _on_area_entered(area):
+func _on_body_entered(body):
 	if not active:
 		return
-	if area.name == "player":
-		constants.loadDialog(0)
+	if body.name == "player":
+		player.overworldRespawnPos = body.position
+		if lockPlayer:
+			player.cutscene = 1
+		await constants.loadDialog(dialogLoaded)
+		if lockPlayer:
+			player.cutscene = 0
+
+

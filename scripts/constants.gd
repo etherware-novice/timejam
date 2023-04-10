@@ -19,8 +19,25 @@ const dialogTable = [
 	{ "Lorem ipsum doler": "default",
 	"Sit amet": "default",
 	"abc": "123" },
-	{"Where am I?": "player"}
+	{"Where am I?": "player"},
+	{"Oh no, an icecream slime!": "player"},
+	{"That was close": "player"},
+	{"There's nothing here!": "player",
+	"What do we do now...?": "player"}
 ]
+
+var postDialog = {
+	2: func():
+		loadBattle(player.overworldRespawnPos, 2),
+	4: func():
+		get_tree().change_scene_to_file("res://scenes/preboot.gd")
+		player.new = 1
+}
+
+var postBattle = {
+	2: func():
+		loadDialog(3)
+}
 
 func loadBattle(position, encounter):
 	player.nextEncounter = encounter
@@ -39,3 +56,5 @@ func loadDialog(id):
 	box.set_owner(root)
 	box.start(dArray)
 	await box.ended
+	if postDialog.has(id):
+		postDialog[id].call()

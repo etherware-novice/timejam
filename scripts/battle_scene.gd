@@ -193,4 +193,6 @@ func fadeOut():
 	var tweener = get_tree().create_tween()
 	tweener.tween_property($CanvasModulate, "color", Color(), 2)
 	await tweener.finished
-	get_tree().change_scene_to_file("res://scenes/overworld_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/story.tscn")
+	if constants.postBattle.has(player.nextEncounter):
+		constants.postBattle[player.nextEncounter].call()

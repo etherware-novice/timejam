@@ -33,3 +33,8 @@ func _on_area_entered(area):
 		
 		player.overworldRespawnPos = area.position
 		constants.loadBattle(area.get_global_transform_with_canvas().get_origin(), enemy)
+
+
+func _on_body_entered(body):
+	_on_area_entered(body)
+	pass # Replace with function body.
